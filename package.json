@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "prettier": "^1.18.2"
   },
   "dependencies": {
@@ -16,6 +17,10 @@
     "start": "export PORT=8001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "elastic": "docker run -d \\\n-v \"$PWD/esdata\":/usr/share/elasticsearch/data \\\n-p 9200:9200 -p 9300:9300 \\\n--name es \\\nelasticsearch:latest",
+    "kibana": "docker run -d \\\n--link es:es-url \\\n-e ELASTICSEARCH_URL=\"http://es-url:9200\" \\\n-p 5601:5601 \\\n--name kibana \\\nkibana:latest",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
